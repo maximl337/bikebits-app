@@ -25,4 +25,22 @@ class HomeController extends Controller
     {
         return view('home');
     }
+
+    /**
+     * [bikeIndex description]
+     * @return [type] [description]
+     */
+    public function bikeIndex()
+    {
+        return view('bike.index');
+    }
+
+    /**
+     * [shocksIndex description]
+     * @return [type] [description]
+     */
+    public function shocksIndex()
+    {
+        return view('bike.shocks');
+    }
 }
