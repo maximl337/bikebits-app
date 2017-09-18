@@ -8,58 +8,5 @@
 // Bootstrap
 @import "~bootstrap-sass/assets/stylesheets/bootstrap";
 
-html, body {
-    background-color: #fff;
-    color: #636b6f;
-    font-family: 'Raleway', sans-serif;
-    font-weight: 100;
-    height: 100vh;
-    margin: 0;
-}
-.full-height {
-    height: 100vh;
-}
-.flex-center {
-    align-items: center;
-    display: flex;
-    justify-content: center;
-}
-.position-ref {
-    position: relative;
-}
-.top-right {
-    position: absolute;
-    right: 10px;
-    top: 18px;
-}
-.content {
-    text-align: center;
-}
-.title {
-    font-size: 84px;
-}
-.links > a {
-    /*color: #636b6f;*/
-    color:white;
-    padding: 0 25px;
-    font-size: 12px;
-    font-weight: 600;
-    letter-spacing: .1rem;
-    text-decoration: none;
-    text-transform: uppercase;
-}
-.m-b-md {
-    margin-bottom: 30px;
-}
-body {
-/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#562e00+0,56442f+100 */
-background: #562e00; /* Old browsers */
-background: -moz-linear-gradient(left,  #562e00 0%, #56442f 100%); /* FF3.6-15 */
-background: -webkit-linear-gradient(left,  #562e00 0%,#56442f 100%); /* Chrome10-25,Safari5.1-6 */
-background: linear-gradient(to right,  #562e00 0%,#56442f 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#562e00', endColorstr='#56442f',GradientType=1 ); /* IE6-9 */
-}
-h1 {
-color: white;
-}
+@import url("https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css")
 

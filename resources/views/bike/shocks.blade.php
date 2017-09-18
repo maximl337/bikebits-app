@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container-fluid">
+<div class="container-fluid" id="shocks">
     <div class="row">
         <div class="col-md-12">
             <ul class="breadcrumb">
@@ -31,35 +31,15 @@
                 </div>
 
                 <div class="panel-body">
-                    <div class="row">
-                        <div class="col-md-6 text-center">
-                            <iframe width="560" 
-                                height="315" 
-                                src="https://www.youtube.com/embed/C3JfuVmKliE" 
-                                frameborder="0" allowfullscreen></iframe>
+                    
+                    <div v-for="(video, index) in videos">
+                        <img className="media-object"
+                        v-bind:src="video.thumbnail" />
+                        <br />
+                        <div className="media-heading">
+                            @{{video.title}}
                         </div>
-                        <!-- /.col-md-4 -->
-                        <div class="col-md-6 text-center">
-                            <iframe width="560" height="315" src="https://www.youtube.com/embed/rUX_cTuk3O8" frameborder="0" allowfullscreen></iframe>
-                        </div>
-                        <!-- /.col-md-4 -->
                     </div>
-                    <!-- /.row -->
-                    <br />
-                    <div class="row">
-                        <div class="col-md-6 text-center">
-                            <iframe width="560" 
-                                height="315" 
-                                src="https://www.youtube.com/embed/hyrcgkLa6E8" 
-                                frameborder="0" allowfullscreen></iframe>
-                        </div>
-                        <!-- /.col-md-4 -->
-                        <div class="col-md-6 text-center">
-                            <iframe width="560" height="315" src="https://www.youtube.com/embed/bp0nxWZftdI" frameborder="0" allowfullscreen></iframe>
-                        </div>
-                        <!-- /.col-md-4 -->
-                    </div>
-                    <!-- /.row -->
                     
                 </div>
                 <!-- /.panel-body -->
@@ -71,4 +51,44 @@
     <!-- /.row -->
 </div>
 <!-- /.container-fluid -->
+@endsection
+@section('script')
+<script>
+new Vue({
+
+    el: "#shocks",
+
+    data: {
+
+        videos: []
+    },
+
+    methods: {
+
+    },
+
+    mounted: function() {
+
+        utils.spinner();
+
+        var self = this;
+
+        YTSearch({ key: 'AIzaSyCue6uy1WzHxnmwFpQj7YAWEB9MGxe5Tv4', term: 'shocks' }, function(vids) {
+            
+            self.videos = vids.map(function(vid) {
+                return {
+                    id: vid.id.videoId,
+                    thumbnail: vid.snippet.thumbnails.high.url,
+                    title: vid.snippet.title,
+                    desc: vid.snippet.description
+                }
+            });
+
+
+            swal.close();
+        });
+    }
+
+});
+</script>
 @endsection

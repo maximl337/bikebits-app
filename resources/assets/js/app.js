@@ -7,7 +7,11 @@
 
 require('./bootstrap');
 
+window.YTSearch = require('youtube-api-search');
+
 window.Vue = require('vue');
+
+require('sweetalert');
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -15,8 +19,56 @@ window.Vue = require('vue');
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-Vue.component('example', require('./components/Example.vue'));
+// Vue.component('example', require('./components/Example.vue'));
 
-const app = new Vue({
-    el: '#app'
-});
+// const app = new Vue({
+//     el: '#app'
+// });
+
+const YOUTUBE_API_KEY = 'AIzaSyCue6uy1WzHxnmwFpQj7YAWEB9MGxe5Tv4';
+
+window.utils = {
+
+    spinner: function(text, title) {
+
+        // if(!title) {
+        //     var title = '<i class="fa fa-gear fa-5x fa-spin"></i>';
+        // }
+        if(!text) {
+            var text = 'Working. Hangon...';
+        }
+
+        swal({
+            text: text,
+            buttons: false
+        });
+    },
+
+    trunc: function(text, length) {
+        var length = length || 15;
+        if(text.length > length) {
+            return text.substr(0, length) + "..."
+        }
+        return text;
+    },
+
+    handle422Error: function(errors, title) {
+
+            if(!title) {
+                var title = 'There was a problem';
+            }
+
+            var text = '';
+
+            $.each(errors, function(i, v) {
+                text += '<p class="text-danger">' + v[0] + '</p>';
+            });
+
+            swal({
+                title: title,
+                text: text,
+                type: 'error',
+                html: true,
+            });
+        }
+}
