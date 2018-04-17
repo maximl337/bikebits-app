@@ -1,13 +1,7 @@
 <?php
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/{any}', function () {
 
-Auth::routes();
+    return view('app');
 
-Route::get('/home', 'HomeController@index')->name('home');
-
-Route::get('/bike', 'HomeController@bikeIndex');
-
-Route::get('/bike/shocks', 'HomeController@shocksIndex');
+})->where(['any' => '.*']);

@@ -1,26 +1,20 @@
-FROM ubuntu:16.04
+FROM ubuntu:17.10
 
 MAINTAINER Angad Dubey
-
-RUN apt-get update \
-    && apt-get -yqq install \
-    software-properties-common \
-    python-software-properties \
-    && LC_ALL=C.UTF-8 add-apt-repository -y ppa:ondrej/php
 
 # Install everything the app requires
 RUN apt-get clean && apt-get update \
     && apt-get -yqq install \
     apache2 \
     nodejs \
-    php7.1 \
-    php7.1-mcrypt \
-    php7.1-curl \
-    php7.1-mbstring \
-    php7.1-xml \
-    php7.1-zip \
+    php \
+    php-mcrypt \
+    php-curl \
+    php-mbstring \
+    php-xml \
+    php-zip \
     libapache2-mod-php \
-    php7.1-mysql \
+    php-mysql \
     git \
     supervisor \
     && apt-get -y autoremove \

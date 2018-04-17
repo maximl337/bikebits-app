@@ -11,3 +11,5 @@ services:
         env_file: .env
         volumes:
             - ./mysql:/var/lib/mysql
+    redis:
+        image: redis:alpine
