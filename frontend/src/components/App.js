@@ -1,11 +1,15 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { Component } from 'react';
 
-const App = () => (
-	<div>
-		Welcome to Bikebits
-		<Link to="/login">Login</Link>
-	</div>
-)
+class App extends Component {
+	render() {
+		return (
+			<div className="row">
+				<div className="col">
+					<h1>Welcome to Bikebits</h1>
+				</div>
+			</div>
+		);
+	}
+}
   
 export default App;

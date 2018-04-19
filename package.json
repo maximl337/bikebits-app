@@ -20,6 +20,7 @@
     "youtube-api-search": "0.0.5"
   },
   "dependencies": {
+    "bootstrap": "^4.1.0",
     "sweetalert": "^2.0.3"
   }
 }
