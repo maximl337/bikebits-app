@@ -1,27 +1,29 @@
+import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
-import React from 'react';
 import {Provider} from 'react-redux';
 import {Route} from 'react-router-dom';
 import {ConnectedRouter} from 'react-router-redux';
-import App from '../components/App';
-import Login from '../components/Login';
+import LoadingBar from 'react-redux-loading';
+import App from './App';
+import Login from './Login';
 
-export default function Root({store, history}) {
-    return (
-        <Provider store={store}>
-            <div>
-                <ConnectedRouter history={history}>
-                    <div>
-                        <Route path="/" exact component={App}/>
-                        <Route path="/login" component={Login} />
-                    </div>
-                </ConnectedRouter>
+const Root = ({ store, history }) => (
+    <Provider store={store}>
+      <Fragment>
+        <ConnectedRouter history={history}>
+          <Fragment>
+            <LoadingBar />
+            <div className="container-fluid">
+              <Route path="/" exact component={App} />
+              <Route path="/login" component={Login} />
             </div>
-        </Provider>
-    );
-}
-
+          </Fragment>
+        </ConnectedRouter>
+      </Fragment>
+    </Provider>
+)
 Root.propTypes = {
-    store: PropTypes.object.isRequired,
-    history: PropTypes.object.isRequired
-};
+  store: PropTypes.object.isRequired,
+  history: PropTypes.object.isRequired
+}
+export default Root;
