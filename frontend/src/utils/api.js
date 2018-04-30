@@ -1,11 +1,14 @@
 import {
   _getBranding,
+  _getMainCategories
 } from './_DATA.js'
 
-export function getBranding () {
+export function getInitialData () {
   return Promise.all([
     _getBranding(),
-  ]).then(([branding]) => ({
-    branding
+    _getMainCategories(),
+  ]).then(([branding, mainCategories]) => ({
+    branding,
+    mainCategories
   }))
 }
