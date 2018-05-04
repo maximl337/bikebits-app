@@ -4,3 +4,6 @@
 a.branding {
 	color: white !important;
 }
+.card.main-category {
+	border: none;
+}

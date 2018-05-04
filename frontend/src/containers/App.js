@@ -1,29 +1,33 @@
-import React, { Component, Fragment } from 'react';
-import { handleGetInitialData } from '../actions/shared';
-import {connect} from 'react-redux';
-import Header from '../components/Header';
-import MainCategoriesList from '../components/MainCategoriesList';
+import React, { Component, Fragment } from 'react'
+import { handleGetInitialData } from '../actions/shared'
+import { connect } from 'react-redux'
+import { Route, Switch } from 'react-router-dom'
+import Header from '../components/Header'
+import Home from '../components/Home'
+import SubCategories from './SubCategories'
 
 class App extends Component {
 	componentDidMount() {
-    this.props.dispatch(handleGetInitialData());
+    this.props.dispatch(handleGetInitialData())
   }
 	render() {
 		const { branding, mainCategories } = this.props
 		return (
 			<Fragment>
 				<Header branding={branding} />
-				<MainCategoriesList mainCategories={mainCategories} />
+				<Switch>
+					<Route path="/category/:categoryId" component={SubCategories} />
+					<Route render={(props) => <Home {...props} mainCategories={mainCategories} />}  />
+				</Switch>
 			</Fragment>
 		); 
 	}
 }
 
-const mapStateToProps = (state, ownProps) => {
-	const { branding, mainCategories } = state;
+const mapStateToProps = ({ branding, mainCategories }, ownProps) => {
 	return {
 		branding,
 		mainCategories
 	}
 }
-export default connect(mapStateToProps)(App);
+export default connect(mapStateToProps)(App)
