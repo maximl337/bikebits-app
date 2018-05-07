@@ -49,7 +49,7 @@ let subCategoriesTerms = [
 		title: "Drivetrain",
 		description: "Find a Ride, Maps, Guides",
 		image: loremIpsumImage,
-		subcategories: []
+		subCategoryId: ''
 	},
 ]
 
@@ -69,7 +69,6 @@ export function _getMainCategories () {
 }
 
 export function _getSubCategories( categoryId ) {
-
 	return new Promise((res, rej) => {
     setTimeout(() => res({
     	data: subCategories.filter(o => o.categoryId == categoryId)
