@@ -17,11 +17,12 @@ export const handleGetInitialData = () => (dispatch, getState) => {
 	dispatch(showLoading())
   getInitialData()
   	.then((resp) => {
-  		const { branding, mainCategories } = resp
+  		const { branding, mainCategories } = resp.data
   		dispatch(getBrandingSuccess(branding))
   		dispatch(getMainCategoriesSuccess(mainCategories))
   	})
   	.catch(err => {
+      console.log("ERROR", err);
   		if(err.response.status === 422) {
         dispatch(getBrandingFailure(err.response.data))
         dispatch(getMainCategoriesFailure(err.response.data))

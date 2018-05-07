@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
 import {Provider} from 'react-redux'
-import {Route} from 'react-router-dom'
+import {Route, Switch} from 'react-router-dom'
 import {ConnectedRouter} from 'react-router-redux'
 import LoadingBar from 'react-redux-loading'
 import App from './App'
@@ -14,8 +14,10 @@ const Root = ({ store, history }) => (
           <Fragment>
             <LoadingBar />
             <div className="container-fluid">
-              <Route path="/" exact component={App} />
-              <Route path="/login" exact component={Login} />
+              <Switch>
+                <Route path="/login" component={Login} />
+                <Route path="/" component={App} />
+              </Switch>
             </div>
           </Fragment>
         </ConnectedRouter>
