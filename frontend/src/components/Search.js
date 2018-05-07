@@ -1,18 +1,19 @@
 import React, { Component, Fragment } from 'react'
+import PropTypes from 'prop-types'
 
 class Search extends Component {
 	state = {
 		searchTerm: ''
 	}
 	onInputChange = (e) => {
-		e.preventDefault();
+		e.preventDefault()
 		this.setState({
 			searchTerm: e.target.value
 		})
 	}
 	onSearchSubmit = (e) => {
 		e.preventDefault();
-		alert(this.state.searchTerm);
+		this.props.handleSearchSubmit(this.state.searchTerm)
 	}
 	render() {
 		return (
@@ -35,6 +36,10 @@ class Search extends Component {
 			</Fragment>
 		)
 	}
+}
+
+Search.propTypes = {
+	handleSearchSubmit: PropTypes.func.isRequired
 }
 
 export default Search

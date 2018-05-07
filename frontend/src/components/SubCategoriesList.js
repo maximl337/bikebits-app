@@ -3,7 +3,7 @@ import SubCategory from './SubCategory'
 
 const SubCategoriesList = ({ subCategories }) => (
 	<div className="row">
-		{subCategories.map((subCategory) => <SubCategory subCategory={subCategory} />)}
+		{subCategories.map((subCategory) => <SubCategory key={subCategory.id} subCategory={subCategory} />)}
 	</div>
 )
 
