@@ -5,7 +5,7 @@ import { Route, Switch } from 'react-router-dom'
 import Header from '../components/Header'
 import Home from '../components/Home'
 import SubCategories from './SubCategories'
-import SearchResult from './SearchResult'
+import SearchResultList from './SearchResultList'
 
 class App extends Component {
 	componentDidMount() {
@@ -18,7 +18,7 @@ class App extends Component {
 				<Header branding={branding} />
 				<Switch>
 					<Route path="/category/:categoryId" component={SubCategories} />
-					<Route path="/search" component={SearchResult} />
+					<Route path="/search" component={SearchResultList} />
 					<Route render={(props) => <Home {...props} mainCategories={mainCategories} />}  />
 				</Switch>
 			</Fragment>
