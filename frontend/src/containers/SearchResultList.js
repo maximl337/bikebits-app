@@ -14,7 +14,7 @@ class SearchResultList extends Component {
 	}
 	componentDidMount() {
 		const searchTerm = this.props.location.search
-		YTSearch({ key: 'AIzaSyCue6uy1WzHxnmwFpQj7YAWEB9MGxe5Tv4', term: searchTerm }, (vids) => {
+		YTSearch({ key: API_KEY, term: searchTerm }, (vids) => {
 			console.log("-----VIDEOs----", vids)
     	const videos = vids.map((vid) => (
 				{
