@@ -25,9 +25,9 @@ RUN apt-get clean && apt-get update \
     && ln -sf /dev/stderr /var/log/apache2/error.log
 
 # Add dir conf file to apache
-ADD docker-conf/apache2/dir.conf /etc/apache2/mods-enabled/
+COPY docker-conf/apache2/dir.conf /etc/apache2/mods-enabled/
 
-ADD docker-conf/apache2/000-default.conf /etc/apache2/sites-enabled/
+COPY docker-conf/apache2/000-default.conf /etc/apache2/sites-enabled/
 
 # Enable a2enmod
 RUN a2enmod rewrite
@@ -36,10 +36,10 @@ RUN a2enmod rewrite
 RUN service apache2 restart
 
 # Configure supervisord
-ADD docker-conf/supervisor/supervisord.conf /etc/supervisor/
+COPY docker-conf/supervisor/supervisord.conf /etc/supervisor/
 
 # Add supervisor
-ADD docker-conf/supervisor/supervisor_conf/* /etc/supervisor/conf.d/
+COPY docker-conf/supervisor/supervisor_conf/* /etc/supervisor/conf.d/
 
 # Expose ports
 EXPOSE 80
