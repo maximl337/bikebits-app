@@ -6,6 +6,12 @@ use Illuminate\Http\Request;
 
 class JourneyController extends ApiController
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth:api');
+    }
+
     /**
      * [index description]
      * @param  Request $request [description]
