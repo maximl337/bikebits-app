@@ -13,3 +13,9 @@ Route::group([
     Route::post('me', 'AuthController@me');
 
 });
+
+Route::resource('categories', 'CategoryController');
+Route::resource('journeys', 'JourneyController');
+Route::resource('journeys/{journey}/objects', 'JourneyObjectController');
+
+

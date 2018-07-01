@@ -11,6 +11,6 @@
     <title>{{ config('app.name', 'Bikebits') }}</title>
 </head>
 <body class="gray-bg">
-    <div id="root">Bikebits</div>
+    <div id="root"></div>
 </body>
 </html>
