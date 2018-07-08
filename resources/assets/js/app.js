@@ -20,10 +20,16 @@ require('sweetalert');
  */
 
 // Vue.component('example', require('./components/Example.vue'));
+Vue.component('login-form', require('./components/Login.vue'));
 
 // const app = new Vue({
 //     el: '#app'
 // });
+if(document.getElementById("login-form")) {
+    new Vue({
+        el: "#login-form"
+    });
+}
 
 const YOUTUBE_API_KEY = 'AIzaSyCue6uy1WzHxnmwFpQj7YAWEB9MGxe5Tv4';
 
