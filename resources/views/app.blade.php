@@ -9,8 +9,14 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>{{ config('app.name', 'Bikebits') }}</title>
+    <!-- Styles -->
+    <link href="{{ mix('css/app.css') }}" rel="stylesheet">
 </head>
-<body class="gray-bg">
-    <div id="root"></div>
+<body class="gray-bg" style="padding-top: 50px;">
+    <div id="root">
+        <router-view></router-view>
+    </div>
+    <!-- Scripts -->
+    <script src="{{ mix('js/app.js') }}"></script>
 </body>
 </html>
