@@ -26,9 +26,7 @@
                 <button type="submit" class="btn btn-primary">
                   Login
                 </button>
-                <a class="btn btn-link" href="#">
-                  Forgot Your Password?
-                </a>
+                  <router-link class="btn btn-link" to="/register">Create a new Account</router-link>
               </div>
             </div>
           </form>
