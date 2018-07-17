@@ -7,3 +7,14 @@ export function login(email, password) {
     password
   })
 }
+
+export function register(first_name, last_name, email, password, password_confirmation) {
+  var url = '/api/auth/register';
+  return axios.post(url, {
+    first_name,
+    last_name,
+    email,
+    password,
+    password_confirmation
+  });
+}

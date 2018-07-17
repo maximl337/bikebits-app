@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 
 class AuthController extends Controller
 {
@@ -14,7 +15,7 @@ class AuthController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth:api', ['except' => ['login']]);
+        $this->middleware('auth:api', ['except' => ['login', 'register']]);
     }
 
     /**
@@ -79,5 +80,25 @@ class AuthController extends Controller
             'token_type' => 'bearer',
             'expires_in' => auth()->factory()->getTTL() * 60
         ]);
+    }
+
+    public function register(Request $request)
+    {
+        $this->validate($request, [
+            'first_name' => 'required',
+            'last_name' => 'required',
+            'email' => 'required|email|unique:users,email',
+            'password' => 'required|min:3|confirmed'
+        ]);
+
+        $user = new User($request->only('first_name', 'last_name', 'email'));
+        $user->password = bcrypt($request->password);
+        $user->save();
+
+        if (! $token = auth()->attempt(request(['email', 'password']))) {
+            return response()->json(['error' => 'Invalid credentials'], 401);
+        }
+
+        return $this->respondWithToken($token);
     }
 }

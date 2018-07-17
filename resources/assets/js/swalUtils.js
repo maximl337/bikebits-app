@@ -1,24 +1,8 @@
 export default {
 
-    storage: {
-        get: function(key) {
-            return localStorage.getItem(key);
-        },
-        set: function(key, value) {
-            localStorage.setItem(key, value);
-        },
-        exists: function(key) {
-            if(localStorage.getItem(key)) {
-                return localStorage.getItem(key)
-            }
-            return false;
-        }
-    },
-
     spinner: function(text, title) {
 
         if(!text) {
-
             var text = 'Working. Hangon...';
         }
 
@@ -39,7 +23,6 @@ export default {
     },
 
     handle422Error: function(errors, title) {
-
         if(!title) {
             var title = 'There was a problem';
         }
@@ -47,21 +30,20 @@ export default {
         var text = '';
 
         $.each(errors, function(i, v) {
-            text += '<p class="text-danger">' + v[0] + '</p>';
+            text += v[0];
         });
-
         swal({
             title: title,
             text: text,
-            type: 'error',
             html: true,
+            icon: 'error',
         });
     },
 
     handleError: function(err) {
         if(err.response) {
             if(err.response.status == 422) {
-                this.handle422Error(err.response.data);   
+                this.handle422Error(err.response.data.errors);   
             } else {
                 swal("Uh oh!", "Something went wrong", "error");
             }
@@ -74,7 +56,7 @@ export default {
         swal({
             title: title,
             text: text,
-            type: 'success',
+            icon: 'success',
             showConfirmButton: false,
             timer: 1500
         });

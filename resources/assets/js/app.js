@@ -6,6 +6,7 @@
  */
 
 require('./bootstrap');
+require('./swalUtils');
 
 window.YTSearch = require('youtube-api-search');
 
@@ -22,48 +23,3 @@ require('./vue-config');
 
 const YOUTUBE_API_KEY = 'AIzaSyCue6uy1WzHxnmwFpQj7YAWEB9MGxe5Tv4';
 
-window.utils = {
-
-    spinner: function(text, title) {
-
-        // if(!title) {
-        //     var title = '<i class="fa fa-gear fa-5x fa-spin"></i>';
-        // }
-        if(!text) {
-            var text = 'Working. Hangon...';
-        }
-
-        swal({
-            text: text,
-            buttons: false
-        });
-    },
-
-    trunc: function(text, length) {
-        var length = length || 15;
-        if(text.length > length) {
-            return text.substr(0, length) + "..."
-        }
-        return text;
-    },
-
-    handle422Error: function(errors, title) {
-
-            if(!title) {
-                var title = 'There was a problem';
-            }
-
-            var text = '';
-
-            $.each(errors, function(i, v) {
-                text += '<p class="text-danger">' + v[0] + '</p>';
-            });
-
-            swal({
-                title: title,
-                text: text,
-                type: 'error',
-                html: true,
-            });
-        }
-}
