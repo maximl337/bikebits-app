@@ -69,11 +69,11 @@ export default {
       register(this.first_name, this.last_name, this.email, this.password, this.password_confirmation)
         .then(resp => { 
           if(resp.data.access_token) {
-            localStorage.setItem('token', resp.data.access_token);  
-            console.log('Registered successfully');
-            // redirect
+            localStorage.setItem('token', resp.data.access_token); 
+            localStorage.setItem('user', JSON.stringify(resp.data.user));
+            this.$router.push('app');
           }
-          
+          console.log('Could not log you in');
         })
         .catch(err => { console.log(err); swalUtils.handleError(err); } );
     }

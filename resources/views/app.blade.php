@@ -12,7 +12,7 @@
     <!-- Styles -->
     <link href="{{ mix('css/app.css') }}" rel="stylesheet">
 </head>
-<body class="gray-bg" style="padding-top: 50px;">
+<body class="gray-bg" style="padding-top: 50px">
     <div id="root">
         <router-view></router-view>
     </div>

@@ -49,14 +49,18 @@ export default {
   },
   methods: {
     login() {
-      utils.spinner();
+      //utils.spinner();
       api.login(this.email, this.password)
         .then(resp => { 
           if(resp.data.access_token) {
             localStorage.setItem('token', resp.data.access_token);  
-            // redirect
+            localStorage.setItem('user', JSON.stringify(resp.data.user));
+            if(this.$route.params.nextUrl != null){
+              this.$router.push(this.$route.params.nextUrl)
+            } else {
+              this.$router.push('app')
+            }
           }
-          
         })
         .catch(err => { console.log(err); swalUtils.handleError(err); } );    }
   },

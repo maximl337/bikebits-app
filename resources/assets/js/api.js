@@ -18,3 +18,8 @@ export function register(first_name, last_name, email, password, password_confir
     password_confirmation
   });
 }
+
+export function getCategories() {
+  var url = '/api/categories';
+  return axios.get(url);
+}
