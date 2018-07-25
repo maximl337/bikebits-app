@@ -13,4 +13,9 @@ class Category extends Model
    		'image',
    		'description'
    	];
+
+   	public function journeys()
+   	{
+   		return $this->hasMany(Journey::class);
+   	}
 }

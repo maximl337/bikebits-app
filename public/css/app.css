@@ -8350,3 +8350,7 @@ button.close {
   }
 }
 
+#root {
+  padding-top: 75px;
+}
+

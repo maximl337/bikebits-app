@@ -11,4 +11,9 @@ class JourneyObject extends Model
     	'object_type_id',
     	'journey_id'
     ];
+
+    public function journey()
+    {
+    	return $this->belongsTo(Journey::class);
+    }
 }

@@ -23,3 +23,10 @@ export function getCategories() {
   var url = '/api/categories';
   return axios.get(url);
 }
+
+export function getJourneys(category) {
+  const url = '/api/journeys';
+  return axios.get(url, { params: {
+    category: category
+  } });
+}

@@ -12,4 +12,14 @@ class Journey extends Model
     	'user_id',
     	'category_id'
     ];
+
+    public function category()
+    {
+    	return $this->belongsTo(Category::class);
+    }
+
+    public function journey_objects()
+    {
+    	return $this->hasMany(JourneyObject::class);
+    }
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Category;
 
 class JourneyController extends ApiController
 {
@@ -19,7 +20,11 @@ class JourneyController extends ApiController
      */
     public function index(Request $request)
     {
-        $journeys = $request->user()->journeys()->all();
+        $this->validate($request, [
+            'category' => 'required'
+        ]);
+        $category = Category::where('title', ucfirst($request->category))->firstOrFail();
+        $journeys = $category->journeys()->with('journey_objects')->get();
         return $this->respond(compact('journeys'));
     }
 
