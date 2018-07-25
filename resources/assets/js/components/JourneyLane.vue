@@ -1,6 +1,6 @@
 <template>
   <div class="row">
-    journey lane
+    
   </div><!-- /.row -->
 </template>
 <script>
