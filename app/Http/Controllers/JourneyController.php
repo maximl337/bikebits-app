@@ -21,9 +21,9 @@ class JourneyController extends ApiController
     public function index(Request $request)
     {
         $this->validate($request, [
-            'category' => 'required'
+            'categoryId' => 'required|exists:categories,id'
         ]);
-        $category = Category::where('title', ucfirst($request->category))->firstOrFail();
+        $category = Category::find($request->categoryId);
         $journeys = $category->journeys()->with('journey_objects')->get();
         return $this->respond(compact('journeys'));
     }

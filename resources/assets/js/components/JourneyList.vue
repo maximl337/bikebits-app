@@ -1,18 +1,28 @@
 <template>
   <div class="row">
-    <div class="col-md-8 col-md-offset-2" v-if="loading">
+    <div class="col-md-4 col-md-offset-4" v-if="loading">
       <p class="alert alert-warning text-center">
         Loading...
       </p><!-- /.alert alert-warning text-center -->
     </div><!-- /.col-md-8 col-md-offset-2 -->
-    <div class="col-md-12" v-if="error">
+    <div v-else class="col-md-12 text-right">
+      <router-link :to="{ name: 'journeys-create' }">
+        <button class="btn btn-sm btn-primary">
+          Create Journey
+        </button> 
+      </router-link>
+    </div>
+    <div class="col-md-4 col-md-offset-4" v-if="error">
       <p class="alert alert-danger">Something went wrong</p>
     </div><!-- /.col-md-12 -->
     <div v-for="journey in journeys" class="col-md-12 journeys" >
       <journey-lane :journey="journey"></journey-lane>
     </div><!-- /.col-md-12 journeys -->
-    <div v-if="!journeys.length" class="col-md-12">
-      <p class="text-center text-muted">No Journeys found.</p>
+    <div v-if="!journeys.length" class="col-md-4 col-md-offset-4 text-center">
+      <p class="text-muted alert alert-info">No Journeys found.</p>
+      <router-link :to="{ name: 'journeys-create' }">
+        <button class="btn btn-primary">Create a new journey</button>
+      </router-link>
     </div>
   </div>
 </template>
@@ -27,11 +37,14 @@ export default {
     return {
       loading: true,
       error: false,
-      journeys: []
+      journeys: [],
+      categoryId: '',
     }
   },
   created () {
     this.fetchJourneys();
+    this.categoryId = this.$route.params.categoryId
+    localStorage.setItem('categoryId', this.categoryId)
   },
   watch: {
     '$route': 'fetchJourneys'
@@ -41,7 +54,7 @@ export default {
       this.loading = true
       this.error = false
       this.journeys = this.journeys.splice(0, this.journeys.length - 1)
-      getJourneys(this.$route.params.categoryTitle)
+      getJourneys(this.$route.params.categoryId)
         .then(resp => {
           this.journeys = this.journeys.concat(resp.data.journeys)
         })

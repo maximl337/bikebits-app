@@ -5,7 +5,7 @@
       v-for="category in categories"
     >
       <div class="text-center">
-        <router-link :to="{ name: 'journeys', params: { categoryTitle: category.title.toLowerCase() }}" append>
+        <router-link :to="{ name: 'journeys', params: { categoryId: category.id }}" append>
           <img :src="category.image" />
         </router-link>
         <h3>{{ category.title }}</h3>

@@ -47,6 +47,10 @@ export default {
       error: '',
     }
   },
+  beforeMount() {
+    localStorage.setItem('token', ''); 
+    localStorage.setItem('user', '');
+  },
   methods: {
     login() {
       //utils.spinner();

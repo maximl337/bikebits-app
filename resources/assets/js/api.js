@@ -24,9 +24,9 @@ export function getCategories() {
   return axios.get(url);
 }
 
-export function getJourneys(category) {
+export function getJourneys(categoryId) {
   const url = '/api/journeys';
   return axios.get(url, { params: {
-    category: category
+    categoryId
   } });
 }

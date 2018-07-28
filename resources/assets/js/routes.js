@@ -3,6 +3,8 @@ import Register from './components/Register.vue'
 import App from './components/App.vue'
 import CategoryList from './components/CategoryList.vue'
 import JourneyList from './components/JourneyList.vue'
+import JourneyCreate from './components/JourneyCreate.vue'
+import JourneyObjects from './components/JourneyObjects.vue'
 
 const routes = [
   { 
@@ -26,9 +28,19 @@ const routes = [
         component: CategoryList
       },
       {
-        path: '/:categoryTitle/journeys',
+        path: '/:categoryId/journeys',
         name: 'journeys',
         component: JourneyList
+      },
+      {
+        path: '/journeys/create',
+        name: 'journeys-create',
+        component: JourneyCreate
+      },
+      {
+        path: '/journeys/objects',
+        name: 'journeys-objects',
+        component: JourneyObjects
       }
     ] // EO children
   },

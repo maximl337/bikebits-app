@@ -802,10 +802,10 @@ function getCategories() {
   return __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get(url);
 }
 
-function getJourneys(category) {
+function getJourneys(categoryId) {
   var url = '/api/journeys';
   return __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get(url, { params: {
-      category: category
+      categoryId: categoryId
     } });
 }
 
@@ -12677,7 +12677,7 @@ module.exports = Vue;
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(19);
-module.exports = __webpack_require__(81);
+module.exports = __webpack_require__(87);
 
 
 /***/ }),
@@ -46940,6 +46940,12 @@ if (inBrowser && window.Vue) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_CategoryList_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__components_CategoryList_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_JourneyList_vue__ = __webpack_require__(75);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_JourneyList_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__components_JourneyList_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_JourneyCreate_vue__ = __webpack_require__(81);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_JourneyCreate_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__components_JourneyCreate_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_JourneyObjects_vue__ = __webpack_require__(84);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_JourneyObjects_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6__components_JourneyObjects_vue__);
+
+
 
 
 
@@ -46963,9 +46969,17 @@ var routes = [{
     path: '/',
     component: __WEBPACK_IMPORTED_MODULE_3__components_CategoryList_vue___default.a
   }, {
-    path: '/:categoryTitle/journeys',
+    path: '/:categoryId/journeys',
     name: 'journeys',
     component: __WEBPACK_IMPORTED_MODULE_4__components_JourneyList_vue___default.a
+  }, {
+    path: '/journeys/create',
+    name: 'journeys-create',
+    component: __WEBPACK_IMPORTED_MODULE_5__components_JourneyCreate_vue___default.a
+  }, {
+    path: '/journeys/objects',
+    name: 'journeys-objects',
+    component: __WEBPACK_IMPORTED_MODULE_6__components_JourneyObjects_vue___default.a
   }] // EO children
 }];
 
@@ -47074,6 +47088,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       password: '',
       error: ''
     };
+  },
+  beforeMount: function beforeMount() {
+    localStorage.setItem('token', '');
+    localStorage.setItem('user', '');
   },
 
   methods: {
@@ -47401,6 +47419,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       'password_confirmation': ''
     };
   },
+  beforeMount: function beforeMount() {
+    localStorage.setItem('token', '');
+    localStorage.setItem('user', '');
+  },
 
   methods: {
     handleRegister: function handleRegister() {
@@ -47697,6 +47719,8 @@ module.exports = Component.exports
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Nav_vue__ = __webpack_require__(68);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Nav_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__Nav_vue__);
+//
+//
 //
 //
 //
@@ -48043,7 +48067,15 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [_c("nav-bar"), _vm._v(" "), _c("router-view")], 1)
+  return _c(
+    "div",
+    [
+      _c("nav-bar"),
+      _vm._v(" "),
+      _c("div", { staticClass: "container-fluid" }, [_c("router-view")], 1)
+    ],
+    1
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -48181,7 +48213,7 @@ var render = function() {
                   attrs: {
                     to: {
                       name: "journeys",
-                      params: { categoryTitle: category.title.toLowerCase() }
+                      params: { categoryId: category.id }
                     },
                     append: ""
                   }
@@ -48299,6 +48331,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -48310,11 +48352,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     return {
       loading: true,
       error: false,
-      journeys: []
+      journeys: [],
+      categoryId: ''
     };
   },
   created: function created() {
     this.fetchJourneys();
+    this.categoryId = this.$route.params.categoryId;
+    localStorage.setItem('categoryId', this.categoryId);
   },
 
   watch: {
@@ -48327,7 +48372,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       this.loading = true;
       this.error = false;
       this.journeys = this.journeys.splice(0, this.journeys.length - 1);
-      Object(__WEBPACK_IMPORTED_MODULE_0__api__["b" /* getJourneys */])(this.$route.params.categoryTitle).then(function (resp) {
+      Object(__WEBPACK_IMPORTED_MODULE_0__api__["b" /* getJourneys */])(this.$route.params.categoryId).then(function (resp) {
         _this.journeys = _this.journeys.concat(resp.data.journeys);
       }).catch(function (err) {
         _this.error = true;
@@ -48439,15 +48484,30 @@ var render = function() {
     { staticClass: "row" },
     [
       _vm.loading
-        ? _c("div", { staticClass: "col-md-8 col-md-offset-2" }, [
+        ? _c("div", { staticClass: "col-md-4 col-md-offset-4" }, [
             _c("p", { staticClass: "alert alert-warning text-center" }, [
               _vm._v("\n      Loading...\n    ")
             ])
           ])
-        : _vm._e(),
+        : _c(
+            "div",
+            { staticClass: "col-md-12 text-right" },
+            [
+              _c(
+                "router-link",
+                { attrs: { to: { name: "journeys-create" } } },
+                [
+                  _c("button", { staticClass: "btn btn-sm btn-primary" }, [
+                    _vm._v("\n        Create Journey\n      ")
+                  ])
+                ]
+              )
+            ],
+            1
+          ),
       _vm._v(" "),
       _vm.error
-        ? _c("div", { staticClass: "col-md-12" }, [
+        ? _c("div", { staticClass: "col-md-4 col-md-offset-4" }, [
             _c("p", { staticClass: "alert alert-danger" }, [
               _vm._v("Something went wrong")
             ])
@@ -48464,11 +48524,26 @@ var render = function() {
       }),
       _vm._v(" "),
       !_vm.journeys.length
-        ? _c("div", { staticClass: "col-md-12" }, [
-            _c("p", { staticClass: "text-center text-muted" }, [
-              _vm._v("No Journeys found.")
-            ])
-          ])
+        ? _c(
+            "div",
+            { staticClass: "col-md-4 col-md-offset-4 text-center" },
+            [
+              _c("p", { staticClass: "text-muted alert alert-info" }, [
+                _vm._v("No Journeys found.")
+              ]),
+              _vm._v(" "),
+              _c(
+                "router-link",
+                { attrs: { to: { name: "journeys-create" } } },
+                [
+                  _c("button", { staticClass: "btn btn-primary" }, [
+                    _vm._v("Create a new journey")
+                  ])
+                ]
+              )
+            ],
+            1
+          )
         : _vm._e()
     ],
     2
@@ -48486,6 +48561,294 @@ if (false) {
 
 /***/ }),
 /* 81 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(2)
+/* script */
+var __vue_script__ = __webpack_require__(82)
+/* template */
+var __vue_template__ = __webpack_require__(83)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/JourneyCreate.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-42e1d635", Component.options)
+  } else {
+    hotAPI.reload("data-v-42e1d635", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 82 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      categoryId: '',
+      title: '',
+      description: ''
+    };
+  },
+  created: function created() {
+    this.categoryId = localStorage.getItem('categoryId');
+  },
+
+  watch: {
+    //'$route': 'fetchJourneys'
+  },
+  methods: {
+    createJourney: function createJourney(e) {
+      //console.log(this.$data)
+      this.$router.push({ name: 'journeys-objects' });
+    }
+  }
+});
+
+/***/ }),
+/* 83 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "row" }, [
+    _c("div", { staticClass: "col-md-4 col-md-offset-4" }, [
+      _c(
+        "form",
+        {
+          on: {
+            submit: function($event) {
+              $event.preventDefault()
+              return _vm.createJourney($event)
+            }
+          }
+        },
+        [
+          _c("fieldset", [
+            _c("legend", [_vm._v("Create a new journey")]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group" }, [
+              _c("label", [_vm._v("Title")]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.title,
+                    expression: "title"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { type: "text", required: "" },
+                domProps: { value: _vm.title },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.title = $event.target.value
+                  }
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group" }, [
+              _c("label", [_vm._v("Description")]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.description,
+                    expression: "description"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { type: "text", required: "" },
+                domProps: { value: _vm.description },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.description = $event.target.value
+                  }
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _vm._m(0)
+          ])
+        ]
+      )
+    ])
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-group text-right" }, [
+      _c(
+        "button",
+        { staticClass: "btn btn-primary", attrs: { type: "submit" } },
+        [_vm._v("\n            Add\n          ")]
+      )
+    ])
+  }
+]
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-42e1d635", module.exports)
+  }
+}
+
+/***/ }),
+/* 84 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(2)
+/* script */
+var __vue_script__ = __webpack_require__(85)
+/* template */
+var __vue_template__ = __webpack_require__(86)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/JourneyObjects.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-2360fdaa", Component.options)
+  } else {
+    hotAPI.reload("data-v-2360fdaa", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 85 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({});
+
+/***/ }),
+/* 86 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "row" }, [_vm._v("\n  Objects\n")])
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-2360fdaa", module.exports)
+  }
+}
+
+/***/ }),
+/* 87 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
