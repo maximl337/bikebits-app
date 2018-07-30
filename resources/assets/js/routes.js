@@ -5,6 +5,7 @@ import CategoryList from './components/CategoryList.vue'
 import JourneyList from './components/JourneyList.vue'
 import JourneyCreate from './components/JourneyCreate.vue'
 import JourneyObjects from './components/JourneyObjects.vue'
+import SearchResults from './components/SearchResults.vue'
 
 const routes = [
   { 
@@ -25,22 +26,13 @@ const routes = [
     children: [
       {
         path: '/',
-        component: CategoryList
-      },
-      {
-        path: '/:categoryId/journeys',
         name: 'journeys',
         component: JourneyList
       },
       {
-        path: '/journeys/create',
-        name: 'journeys-create',
-        component: JourneyCreate
-      },
-      {
-        path: '/journeys/objects',
-        name: 'journeys-objects',
-        component: JourneyObjects
+        path: '/search',
+        name: 'search',
+        component: SearchResults
       }
     ] // EO children
   },

@@ -1,29 +1,19 @@
 <template>
   <div class="row">
-    <div class="col-md-4 col-md-offset-4" v-if="loading">
+    <div v-if="loading" class="col-md-4 col-md-offset-4" >
       <p class="alert alert-warning text-center">
         Loading...
       </p><!-- /.alert alert-warning text-center -->
     </div><!-- /.col-md-8 col-md-offset-2 -->
-    <div v-else class="col-md-12 text-right">
-      <router-link :to="{ name: 'journeys-create' }">
-        <button class="btn btn-sm btn-primary">
-          Create Journey
-        </button> 
-      </router-link>
-    </div>
-    <div class="col-md-4 col-md-offset-4" v-if="error">
-      <p class="alert alert-danger">Something went wrong</p>
+    <div v-if="error" class="col-md-4 col-md-offset-4">
+      <p class="alert alert-danger text-center">Something went wrong</p>
     </div><!-- /.col-md-12 -->
     <div v-for="journey in journeys" class="col-md-12 journeys" >
       <journey-lane :journey="journey"></journey-lane>
     </div><!-- /.col-md-12 journeys -->
-    <div v-if="!journeys.length" class="col-md-4 col-md-offset-4 text-center">
-      <p class="text-muted alert alert-info">No Journeys found.</p>
-      <router-link :to="{ name: 'journeys-create' }">
-        <button class="btn btn-primary">Create a new journey</button>
-      </router-link>
-    </div>
+    <p class="alert alert-warning text-center" v-if="!journeys.length">
+      No journeys taken yet. You are the first one
+    </p>
   </div>
 </template>
 <script>
@@ -31,7 +21,7 @@ import { getJourneys } from '../api'
 import JourneyLane from './JourneyLane.vue'
 export default {
   components: {
-    'journey-lane': JourneyLane
+    'journey-lane': JourneyLane,
   },
   data() {
     return {
@@ -41,10 +31,8 @@ export default {
       categoryId: '',
     }
   },
-  created () {
+  beforeMount () {
     this.fetchJourneys();
-    this.categoryId = this.$route.params.categoryId
-    localStorage.setItem('categoryId', this.categoryId)
   },
   watch: {
     '$route': 'fetchJourneys'
@@ -54,11 +42,12 @@ export default {
       this.loading = true
       this.error = false
       this.journeys = this.journeys.splice(0, this.journeys.length - 1)
-      getJourneys(this.$route.params.categoryId)
+      getJourneys()
         .then(resp => {
           this.journeys = this.journeys.concat(resp.data.journeys)
         })
         .catch(err => {
+          console.error(err)
           this.error = true
         })
         .then(() => this.loading = false)

@@ -7,9 +7,6 @@
 
 require('./bootstrap');
 require('./swalUtils');
-
-window.YTSearch = require('youtube-api-search');
-
 require('sweetalert');
 
 /**
@@ -19,7 +16,4 @@ require('sweetalert');
  */
 
 require('./vue-config');
-
-
-const YOUTUBE_API_KEY = 'AIzaSyCue6uy1WzHxnmwFpQj7YAWEB9MGxe5Tv4';
 

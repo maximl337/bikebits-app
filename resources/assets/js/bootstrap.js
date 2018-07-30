@@ -21,6 +21,8 @@ try {
 
 window.axios = require('axios');
 
+window.remoteAxios = require('axios');
+
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
 if(localStorage.getItem('token')) {

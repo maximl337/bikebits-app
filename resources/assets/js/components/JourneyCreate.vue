@@ -22,7 +22,8 @@
     </div><!-- /.col-md-12 -->
   </div><!-- /.row -->
 </template>
-<script>
+<script> 
+import { createJourney } from '../api'
 export default {
   data() {
     return {
@@ -33,14 +34,20 @@ export default {
   },
   created() {
     this.categoryId = localStorage.getItem('categoryId');
+    localStorage.setItem('journey', '');
   },
   watch: {
     //'$route': 'fetchJourneys'
   },
   methods: {
     createJourney(e) {
-      //console.log(this.$data)
-      this.$router.push({ name: 'journeys-objects'})
+      createJourney(this.title, this.description, this.categoryId)
+      .then(resp => {
+        localStorage.setItem('journey', JSON.stringify(resp.data.data.journey));
+        this.$router.push({ name: 'journeys-objects'})
+      })
+      .catch(err => console.log(err.response.data))
+      
     }
   }
 }
