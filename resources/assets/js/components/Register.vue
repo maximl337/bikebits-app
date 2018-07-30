@@ -75,6 +75,7 @@ export default {
           if(resp.data.access_token) {
             localStorage.setItem('token', resp.data.access_token); 
             localStorage.setItem('user', JSON.stringify(resp.data.user));
+            window.axios.defaults.headers.common['Authorization'] = 'Bearer ' + resp.data.access_token;
             this.$router.push('app');
           }
           console.log('Could not log you in');

@@ -59,6 +59,7 @@ export default {
           if(resp.data.access_token) {
             localStorage.setItem('token', resp.data.access_token);  
             localStorage.setItem('user', JSON.stringify(resp.data.user));
+            window.axios.defaults.headers.common['Authorization'] = 'Bearer ' + resp.data.access_token;
             if(this.$route.params.nextUrl != null){
               this.$router.push(this.$route.params.nextUrl)
             } else {

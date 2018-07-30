@@ -4,7 +4,7 @@ import App from './components/App.vue'
 import CategoryList from './components/CategoryList.vue'
 import JourneyList from './components/JourneyList.vue'
 import JourneyCreate from './components/JourneyCreate.vue'
-import JourneyObjects from './components/JourneyObjects.vue'
+import JourneyObject from './components/JourneyObject.vue'
 import SearchResults from './components/SearchResults.vue'
 
 const routes = [
@@ -33,6 +33,11 @@ const routes = [
         path: '/search',
         name: 'search',
         component: SearchResults
+      },
+      {
+        path: '/journey/object',
+        name: 'journey-object',
+        component: JourneyObject
       }
     ] // EO children
   },
