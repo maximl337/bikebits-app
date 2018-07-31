@@ -26,6 +26,11 @@ const routes = [
     children: [
       {
         path: '/',
+        name: 'categories',
+        component: CategoryList
+      },
+      {
+        path: '/journey',
         name: 'journeys',
         component: JourneyList
       },

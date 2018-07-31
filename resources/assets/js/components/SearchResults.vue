@@ -1,5 +1,7 @@
 <template>
   <div class="row">
+    <div class="col-md-12 alert alert-info text-center" 
+    v-if="loading"> Loading </div>
     <div class="col-md-12" v-for="result in this.results">
       <div class="thumbnail pull-left">
         <img 
@@ -25,26 +27,28 @@ import { youtubeSearch } from '../api'
 export default {
   data() {
     return {
-      results: []
+      results: [],
+      loading: true,
     }
   },
   created() {
+    this.loading = true;
     this.handleSearch();
-
   },
   methods: {
     handleSearch() {
-      this.results = []
       youtubeSearch(this.$route.query.q)
       .then(resp => {
         resp.json().then(val => {
-          this.results = this.results.concat(val.items);
-          console.log(this.results);
+          this.results = val.items;
+          //console.log(this.results);
+          this.loading = false;
         });
       })
       .catch((error) => {
         console.error(error);
-      });
+      })
+      .then(() => this.loading = false)
     }
   },
   watch: {

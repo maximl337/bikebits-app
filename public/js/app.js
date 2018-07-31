@@ -46348,6 +46348,10 @@ var routes = [{
   component: __WEBPACK_IMPORTED_MODULE_2__components_App_vue___default.a,
   children: [{
     path: '/',
+    name: 'categories',
+    component: __WEBPACK_IMPORTED_MODULE_3__components_CategoryList_vue___default.a
+  }, {
+    path: '/journey',
     name: 'journeys',
     component: __WEBPACK_IMPORTED_MODULE_4__components_JourneyList_vue___default.a
   }, {
@@ -48520,15 +48524,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      results: []
+      results: [],
+      loading: true
     };
   },
   created: function created() {
+    this.loading = true;
     this.handleSearch();
   },
 
@@ -48536,14 +48544,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     handleSearch: function handleSearch() {
       var _this = this;
 
-      this.results = [];
       Object(__WEBPACK_IMPORTED_MODULE_0__api__["f" /* youtubeSearch */])(this.$route.query.q).then(function (resp) {
         resp.json().then(function (val) {
-          _this.results = _this.results.concat(val.items);
-          console.log(_this.results);
+          _this.results = val.items;
+          //console.log(this.results);
+          _this.loading = false;
         });
       }).catch(function (error) {
         console.error(error);
+      }).then(function () {
+        return _this.loading = false;
       });
     }
   },
@@ -48563,52 +48573,61 @@ var render = function() {
   return _c(
     "div",
     { staticClass: "row" },
-    _vm._l(this.results, function(result) {
-      return _c("div", { staticClass: "col-md-12" }, [
-        _c("div", { staticClass: "thumbnail pull-left" }, [
-          _c("img", {
-            attrs: {
-              src: result.snippet.thumbnails.default.url,
-              width: result.snippet.thumbnails.default.width,
-              height: result.snippet.thumbnails.default.height
-            }
-          })
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "result-info" }, [
-          _c(
-            "h4",
-            [
-              _c(
-                "router-link",
-                {
-                  attrs: {
-                    to: {
-                      name: "journey-object",
-                      query: { videoId: result.id.videoId }
+    [
+      _vm.loading
+        ? _c("div", { staticClass: "col-md-12 alert alert-info text-center" }, [
+            _vm._v(" Loading ")
+          ])
+        : _vm._e(),
+      _vm._v(" "),
+      _vm._l(this.results, function(result) {
+        return _c("div", { staticClass: "col-md-12" }, [
+          _c("div", { staticClass: "thumbnail pull-left" }, [
+            _c("img", {
+              attrs: {
+                src: result.snippet.thumbnails.default.url,
+                width: result.snippet.thumbnails.default.width,
+                height: result.snippet.thumbnails.default.height
+              }
+            })
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "result-info" }, [
+            _c(
+              "h4",
+              [
+                _c(
+                  "router-link",
+                  {
+                    attrs: {
+                      to: {
+                        name: "journey-object",
+                        query: { videoId: result.id.videoId }
+                      }
                     }
-                  }
-                },
-                [
-                  _vm._v(
-                    "\n        " + _vm._s(result.snippet.title) + "\n        "
-                  )
-                ]
-              )
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c("p", [_vm._v(_vm._s(result.snippet.description))]),
-          _vm._v(" "),
-          _c("p", [
-            _c("em", [_vm._v(_vm._s(result.snippet.publishedAt))]),
-            _vm._v(" - "),
-            _c("strong", [_vm._v(_vm._s(result.snippet.channelTitle))])
+                  },
+                  [
+                    _vm._v(
+                      "\n        " + _vm._s(result.snippet.title) + "\n        "
+                    )
+                  ]
+                )
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c("p", [_vm._v(_vm._s(result.snippet.description))]),
+            _vm._v(" "),
+            _c("p", [
+              _c("em", [_vm._v(_vm._s(result.snippet.publishedAt))]),
+              _vm._v(" - "),
+              _c("strong", [_vm._v(_vm._s(result.snippet.channelTitle))])
+            ])
           ])
         ])
-      ])
-    })
+      })
+    ],
+    2
   )
 }
 var staticRenderFns = []
