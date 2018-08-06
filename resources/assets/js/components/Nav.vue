@@ -26,6 +26,9 @@
                 <router-link to="/login">
                   Logout
                 </router-link>
+                <router-link :to="{ name: 'journeys', query: { categoryId: '' } }" append>
+                  Your journeys
+                </router-link>
               </li>
               <!-- <li><a href="#">Another action</a></li>
               <li><a href="#">Something else here</a></li>

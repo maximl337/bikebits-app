@@ -14,6 +14,6 @@ class CategoryController extends ApiController
      */
     public function index(Request $request)
     {
-        return $this->respond([ 'categories' => Category::all() ]);
+        return $this->respond(Category::all());
     }
 }

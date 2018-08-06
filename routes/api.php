@@ -17,6 +17,7 @@ Route::group([
 
 Route::resource('categories', 'CategoryController');
 Route::resource('journeys', 'JourneyController');
-Route::resource('journeys/{journey}/objects', 'JourneyObjectController');
+Route::get('journeys/objects/types', 'JourneyObjectTypeController@index');
+Route::resource('journeys/objects', 'JourneyObjectController');
 
 

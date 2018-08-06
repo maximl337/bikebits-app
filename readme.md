@@ -1,17 +1,7 @@
-api auth methods
-journey erd
+@TODO
 
-journeys
---------------
-id
-name
-user_id
-saved_at
-
-journey_videos
-----------------
-id
-journey_id
-video_id
-
-
+1. Create active journey sidebar
+2. categorize journey
+3. remove journey objects from journey
+4. fix journey route bug
+5. paginate everything

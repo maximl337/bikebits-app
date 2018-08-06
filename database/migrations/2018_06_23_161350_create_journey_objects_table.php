@@ -15,7 +15,7 @@ class CreateJourneyObjectsTable extends Migration
     {
         Schema::create('journey_objects', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('object_url');
+            $table->string('object_id');
             $table->integer('object_type_id')->unsigned();
             $table->foreign('object_type_id')->references('id')->on('journey_object_types')->onDelete('cascade');
             $table->integer('journey_id')->unsigned();

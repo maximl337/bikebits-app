@@ -5,7 +5,7 @@
       v-for="category in categories"
     >
       <div class="text-center">
-        <router-link :to="{ name: 'journeys', params: { categoryId: category.id }}" append>
+        <router-link :to="{ name: 'journeys', query: { categoryId: category.id }}" append>
           <img :src="category.image" />
         </router-link>
         <h3>{{ category.title }}</h3>
@@ -22,7 +22,7 @@
   </div>
 </template>
 <script>
-import { getCategories } from '../api';
+import { loadInitState } from '../api';
 export default {
   data() {
     return {
@@ -32,10 +32,12 @@ export default {
     }
   },
   mounted() {
-    getCategories()
+    loadInitState()
       .then(resp => {
+        const journeyObjectTypes = resp.data.journeyObjectTypes
         this.categories = this.categories.concat(resp.data.categories)
         localStorage.setItem('categories', JSON.stringify(resp.data.categories))
+        localStorage.setItem('journeyObjectTypes', JSON.stringify(resp.data.journeyObjectTypes))
       })
       .catch(err => {
         console.log(err.response.data)

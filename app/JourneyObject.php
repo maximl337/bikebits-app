@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class JourneyObject extends Model
 {
     protected $fillable = [
-    	'object_url',
+    	'object_id',
     	'object_type_id',
     	'journey_id'
     ];

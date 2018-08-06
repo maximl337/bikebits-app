@@ -1,8 +1,10 @@
 <template>
   <div class="row">
-    <div class="col-md-12 alert alert-info text-center" 
-    v-if="loading"> Loading </div>
-    <div class="col-md-12" v-for="result in this.results">
+    <div class="col-12 alert alert-info text-center" 
+      v-if="loading"
+    > Loading </div>
+
+    <div class="col-xs-12" :key="result.id.videoId" v-for="result in this.results">
       <div class="thumbnail pull-left">
         <img 
           :src="result.snippet.thumbnails.default.url" 
@@ -11,7 +13,7 @@
       </div><!-- /.thumbnail -->
       <div class="result-info">
         <h4>
-          <router-link :to="{ name: 'journey-object', query: { videoId: result.id.videoId } }">
+          <router-link :to="{ name: 'journey-object', query: { videoId: result.id.videoId }   }">
           {{ result.snippet.title }}
           </router-link>
         </h4>
@@ -19,7 +21,7 @@
         <p><em>{{ result.snippet.publishedAt }}</em> - <strong>{{ result.snippet.channelTitle }}</strong></p>
       </div>
       
-    </div><!-- /.col-md-12 -->
+    </div><!-- /.col-md-12 --><br />
   </div><!-- /.row -->
 </template>
 <script>

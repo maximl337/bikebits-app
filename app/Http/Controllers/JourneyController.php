@@ -21,7 +21,14 @@ class JourneyController extends ApiController
      */
     public function index(Request $request)
     {
-        $journeys = Journey::with('journey_objects')->get();
+        \Log::info('request', $request->input());
+        $category_id = $request->input('category_id');
+        $journeys = Journey::whereHas('journey_objects')
+                        ->when($category_id, function ($query, $category_id) {
+                            return $query->where('category_id', $category_id);
+                        })
+                        ->with('journey_objects')
+                        ->get();
         return $this->respond(compact('journeys'));
     }
 
