@@ -15,8 +15,11 @@
       <!-- Collect the nav links, forms, and other content for toggling -->
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <ul class="nav navbar-nav">
-          <!-- <li class="active"><a href="#">Journeys <span class="sr-only">(current)</span></a></li>
-          <li><a href="#">Link</a></li> -->
+          <li>
+            <router-link :to="{ name: 'journeys' }" append>
+              Your journeys
+            </router-link>
+          </li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
           <li class="dropdown">
@@ -26,9 +29,7 @@
                 <router-link to="/login">
                   Logout
                 </router-link>
-                <router-link :to="{ name: 'journeys', query: { categoryId: '' } }" append>
-                  Your journeys
-                </router-link>
+                
               </li>
               <!-- <li><a href="#">Another action</a></li>
               <li><a href="#">Something else here</a></li>

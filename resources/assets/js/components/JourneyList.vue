@@ -22,19 +22,18 @@
         @handleRemoveJourney="handleRemoveJourney($event)"
         @handleStartJourney="handleStartJourney($event)"
         @handleStopJourney="handleStopJourney($event)"
+        @handleUpdateJourney="handleUpdateJourney($event)"
       ></journey-lane>
     </div><!-- /.col-md-12 journeys -->
     <div class="col-md-12" v-if="!journeys.length">
       <p class="alert alert-warning text-center">
         No journeys taken yet. You are the first one
       </p>
-    </div>
-    <!-- /.col-md-12 -->
-    
-  </div>
+    </div><!-- /.col-md-12 -->
+  </div><!-- /.row -->
 </template>
 <script>
-import { getJourneys, removeJourney } from '../api'
+import { getJourneys, removeJourney, updateJourney } from '../api'
 import JourneyLane from './JourneyLane.vue'
 export default {
   components: {
@@ -46,7 +45,6 @@ export default {
       error: false,
       journeys: [],
       categoryId: '',
-      activeJourneyId: '',
     }
   },
   created () {
@@ -81,18 +79,29 @@ export default {
         .catch(err => console.log(err))
     },
     handleStopJourney(journeyId) {
-      this.activeJourneyId = ''
-      localStorage.setItem('journey', null)
+      this.$store.commit('stopJourney')
     },
     handleStartJourney(journeyId) {
-      this.activeJourneyId = journeyId
       const journey = this.journeys.find(j => j.id == journeyId)
-      localStorage.setItem('journey', JSON.stringify(journey))
+      this.$store.commit('startJourney', journey)
+    },
+    handleUpdateJourney(journey) {
+      updateJourney(journey)
+        .then(resp => {
+          const nextJourney = resp.data.journey
+          this.journeys = this.journeys.map(j => {
+            if(j.id == nextJourney.id) {
+              return nextJourney
+            }
+            return j
+          })
+        })
+        .catch(err => console.log(err))
     }
   },
   computed: {
     categoryName() {
-      const categories = JSON.parse(localStorage.getItem('categories'))
+      const categories = this.$store.state.categories
       if(categories) {
         const categoryId = this.$route.query.categoryId
         if(categoryId) {
@@ -104,6 +113,9 @@ export default {
         return 'Your journeys';
       }
       return ''
+    },
+    activeJourneyId() {
+      return this.$store.state.journey.id
     }
   },
 }

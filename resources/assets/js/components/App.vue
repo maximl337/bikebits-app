@@ -15,10 +15,6 @@ export default {
     'nav-bar': Nav,
     'main-search': MainSearch
   },
-  data() {
-   return {
-   }
-  },
   mounted() {
     let user = localStorage.getItem('user')
   }

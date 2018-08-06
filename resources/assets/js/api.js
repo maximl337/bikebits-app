@@ -60,6 +60,13 @@ export function createJourney(title, description, category_id) {
   })
 }
 
+export function updateJourney(journey) {
+  const url = `/api/journeys/${journey.id}`
+  return axios.put(url, {
+    ...journey
+  })
+}
+
 export function youtubeSearch(q) {
   const YOUTUBE_URL = 'https://www.googleapis.com/youtube/v3/search';
   const YOUTUBE_API_KEY = 'AIzaSyCapK2P3i5AERyaaRJ1JndnojwJ-QyMTeY';

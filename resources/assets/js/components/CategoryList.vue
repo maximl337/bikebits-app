@@ -26,7 +26,6 @@ import { loadInitState } from '../api';
 export default {
   data() {
     return {
-      categories: [],
       loading: true,
       errors: false
     }
@@ -35,15 +34,19 @@ export default {
     loadInitState()
       .then(resp => {
         const journeyObjectTypes = resp.data.journeyObjectTypes
-        this.categories = this.categories.concat(resp.data.categories)
-        localStorage.setItem('categories', JSON.stringify(resp.data.categories))
-        localStorage.setItem('journeyObjectTypes', JSON.stringify(resp.data.journeyObjectTypes))
+        this.$store.commit('setCategories', resp.data.categories)
+        this.$store.commit('setJourneyObjectTypes', resp.data.journeyObjectTypes)
       })
       .catch(err => {
         console.log(err.response.data)
         this.errors = true
       })
       .then(() => this.loading = false)
+  },
+  computed: {
+    categories() {
+      return this.$store.state.categories
+    }
   }
 }
 </script>

@@ -4,8 +4,9 @@
     	<div class="panel">
     		<div class="panel-body">
     			<ul class="list-inline">
-	    			<li class="list-inline-item" v-for="journeyObject in journey.journey_objects.slice(0, 5)">
+	    			<li class="list-inline-item" v-for="journeyObject in journey.journey_objects">
 	    				<img 
+                class="thumbnail"
 	    					:src="`https://img.youtube.com/vi/${journeyObject.object_id}/default.jpg`" 
 	    				/>
 	    			</li>
@@ -41,8 +42,19 @@
             :status="status">
               <span><i class="fa fa-stop"></i></span>
           </button-spinner>
-    		</div>
-    		
+          <!-- Single button -->
+          <div class="btn-group">
+            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              {{ activeCategory ? activeCategory.title : "Uncategorized" }} <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu">
+              <li 
+                v-for="category in availableCategories"
+                @click="updateCategory(category.id)"
+              ><a href="#">{{ category.title }}</a></li>
+            </ul>
+          </div>
+    		</div><!-- /.panel-footer -->
     	</div><!-- /.panel -->
     </div><!-- /.col-md-12 -->
   </div><!-- /.row -->
@@ -70,7 +82,7 @@ export default {
     }
   },
   created() {
-    const currentJourney = JSON.parse(localStorage.getItem('journey'))
+    const currentJourney = this.$store.state.journey
     if(!currentJourney) return
     if(this.journey.id == currentJourney.id) this.active = true
   },
@@ -91,6 +103,24 @@ export default {
     startJourney() {
       this.loading = true
       this.$emit('handleStartJourney', this.journey.id)
+    },
+    updateCategory(category_id) {
+      this.$emit('handleUpdateJourney', {
+        ...this.journey,
+        category_id
+      })
+    }
+  },
+  computed: {
+    categories() {
+      return this.$store.state.categories
+    },
+    activeCategory() {
+      return _.find(this.categories, (c => c.id == this.journey.category_id))
+    },
+    availableCategories() {
+      if(!this.activeCategory) return this.categories
+      return this.categories.filter(c => c.id != this.activeCategory.id)
     }
   }
 }

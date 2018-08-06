@@ -56,9 +56,8 @@ export default {
   methods: {
     handleAddToJourney() {
       this.isLoading = true
-      const journeyObjectTypes = JSON.parse(localStorage.getItem('journeyObjectTypes'));
       const journeyId = this.journey !== null && this.journey.hasOwnProperty('id') ? this.journey.id : null
-      storeJourneyObject(journeyObjectTypes[0].id, this.videoId, journeyId)
+      storeJourneyObject(this.journeyObjectTypes[0].id, this.videoId, journeyId)
         .then(resp => {
           const { journey } = resp.data
           this.journey = journey
@@ -81,7 +80,7 @@ export default {
           this.journey = Object.assign({}, this.journey, {
             journey_objects: this.journey.journey_objects.filter(jO => jO.id != this.journeyObject.id)
           })
-          localStorage.setItem('journey', JSON.stringify(this.journey))
+          this.$store.commit('setJourney', this.journey)
           this.journeyObject = null
           this.isLoading = false
           this.status = true
@@ -102,11 +101,14 @@ export default {
         return _.findIndex(this.journey.journey_objects, jO => jO.object_id == this.videoId) > -1
       }
       return false
+    },
+    journeyObjectTypes() {
+      return this.$store.state.journeyObjectTypes
     }
   },
   created() {
     this.videoId = this.$route.query.videoId
-    this.journey = JSON.parse(localStorage.getItem('journey'))
+    this.journey = this.$store.state.journey
     if(this.journey !== null) {
       this.journeyObject = _.find(this.journey.journey_objects, jO => jO.object_id == this.videoId);
     }
