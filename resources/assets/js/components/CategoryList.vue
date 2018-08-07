@@ -1,7 +1,7 @@
 <template>
   <div class="row">
     <div 
-      class="col-md-4 categories"
+      class="col-md-4 category-item"
       v-for="category in categories"
     >
       <div class="text-center">
@@ -50,3 +50,8 @@ export default {
   }
 }
 </script>
+<style scoped>
+.category-item img {
+  width: 100%;
+}
+</style>

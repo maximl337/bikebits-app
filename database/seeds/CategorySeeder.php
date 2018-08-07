@@ -16,19 +16,19 @@ class CategorySeeder extends Seeder
         $data = [
             [ 
                 "title" => "Bike",
-                "image" => "https://i.imgur.com/rbcf0Fc.png",
+                "image" => "https://i.imgur.com/Jjqsc3t.png",
                 "description" => "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
 
             ],
             [ 
                 "title" => "Me",
-                "image" => "https://i.imgur.com/rbcf0Fc.png",
+                "image" => "https://i.imgur.com/hbrnRDK.png",
                 "description" => "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
 
             ],
             [ 
                 "title" => "Trails",
-                "image" => "https://i.imgur.com/rbcf0Fc.png",
+                "image" => "https://i.imgur.com/GafXmSB.png",
                 "description" => "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
 
             ],

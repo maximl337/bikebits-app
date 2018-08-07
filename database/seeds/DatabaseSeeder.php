@@ -13,5 +13,8 @@ class DatabaseSeeder extends Seeder
     {
         $this->call(CategorySeeder::class);
         $this->call(JourneyObjectTypeSeeder::class);
+        if(env('APP_ENV') !== 'production') {
+            $this->call(StagingUserSeeder::class);
+        }
     }
 }
