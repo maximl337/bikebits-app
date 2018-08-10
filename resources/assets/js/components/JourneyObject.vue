@@ -1,20 +1,5 @@
 <template>
   <div>
-    <div class="row black-bg">
-      <div class="col-md-10 col-md-offset-1">
-        <div class="object-wrap">
-          <iframe 
-            width="560" 
-            height="315"
-            :src="youtubeSrc" 
-            frameborder="0" 
-            allow="autoplay; encrypted-media" 
-            allowfullscreen
-          ></iframe>
-        </div>
-      </div><!-- /.col-md-12 -->
-      <br></br>
-    </div><!-- /.row -->
     <div class="row">
       <div class="col-md-12 text-right">
         <button-spinner
@@ -35,6 +20,22 @@
         </button-spinner>
       </div>
     </div>
+    <div class="row black-bg">
+      <div class="col-md-10 col-md-offset-1">
+        <div class="object-wrap">
+          <iframe 
+            width="560" 
+            height="315"
+            :src="youtubeSrc" 
+            frameborder="0" 
+            allow="autoplay; encrypted-media" 
+            allowfullscreen
+          ></iframe>
+        </div>
+      </div><!-- /.col-md-12 -->
+      <br></br>
+    </div><!-- /.row -->
+    
   </div>
 </template>
 <script>
@@ -61,7 +62,7 @@ export default {
         .then(resp => {
           const { journey } = resp.data
           this.journey = journey
-          localStorage.setItem('journey', JSON.stringify(journey))
+          this.$store.commit('setJourney', this.journey)
           this.journeyObject = _.find(this.journey.journey_objects, jO => jO.object_id == this.videoId);
           this.isLoading = false
           this.status = true
@@ -104,11 +105,13 @@ export default {
     },
     journeyObjectTypes() {
       return this.$store.state.journeyObjectTypes
+    },
+    journey() {
+      return this.$store.state.journey
     }
   },
   created() {
     this.videoId = this.$route.query.videoId
-    this.journey = this.$store.state.journey
     if(this.journey !== null) {
       this.journeyObject = _.find(this.journey.journey_objects, jO => jO.object_id == this.videoId);
     }

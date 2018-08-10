@@ -114,8 +114,14 @@ export default {
       }
       return ''
     },
+    journey() {
+      return this.$store.state.journey
+    },
     activeJourneyId() {
-      return this.$store.state.journey.id
+      if(this.journey !== null) {
+        return this.$store.state.journey.id
+      }
+      return '';
     }
   },
 }

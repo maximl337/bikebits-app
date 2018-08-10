@@ -5,7 +5,7 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    journey: {},
+    journey: null,
     categories: [],
     journeyObjectTypes: [],
     journeys: []
@@ -15,7 +15,7 @@ export default new Vuex.Store({
       state.journey = journey
     },
     stopJourney(state) {
-      state.journey = {}
+      state.journey = null
     },
     setCategories(state, categories) {
       state.categories = categories
