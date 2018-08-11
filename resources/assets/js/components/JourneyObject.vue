@@ -47,7 +47,6 @@ export default {
       isLoading: false,
       status: '',
       videoId: '',
-      journey: null,
       journeyObject: null
     }
   },
@@ -60,9 +59,7 @@ export default {
       const journeyId = this.journey !== null && this.journey.hasOwnProperty('id') ? this.journey.id : null
       storeJourneyObject(this.journeyObjectTypes[0].id, this.videoId, journeyId)
         .then(resp => {
-          const { journey } = resp.data
-          this.journey = journey
-          this.$store.commit('setJourney', this.journey)
+          this.$store.commit('setJourney', resp.data.journey)
           this.journeyObject = _.find(this.journey.journey_objects, jO => jO.object_id == this.videoId);
           this.isLoading = false
           this.status = true
@@ -78,10 +75,10 @@ export default {
       if(this.journeyObject == null) return false;
       removeJourneyObject(this.journeyObject.id)
         .then(resp => {
-          this.journey = Object.assign({}, this.journey, {
+          const nextJourney = Object.assign({}, this.journey, {
             journey_objects: this.journey.journey_objects.filter(jO => jO.id != this.journeyObject.id)
           })
-          this.$store.commit('setJourney', this.journey)
+          this.$store.commit('setJourney', nextJourney)
           this.journeyObject = null
           this.isLoading = false
           this.status = true

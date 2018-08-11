@@ -19,8 +19,13 @@ export default {
     'main-search': MainSearch,
     'journey-sidebar': JourneySideBar
   },
-  mounted() {
-    let user = localStorage.getItem('user')
+  beforeMount() {
+    const user = JSON.parse(localStorage.getItem('user'))
+    const token = localStorage.getItem('token')
+    // check user
+    if(!user || !token) this.$router.push('/')
+    window.axios.defaults.headers.common['Authorization'] = 'Bearer ' + token
+    this.$store.commit('setUser', user)
   }
 }
 </script>

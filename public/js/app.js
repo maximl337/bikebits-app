@@ -46582,8 +46582,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     };
   },
   beforeMount: function beforeMount() {
-    localStorage.setItem('token', '');
     localStorage.setItem('user', '');
+    localStorage.setItem('token', '');
   },
 
   methods: {
@@ -46595,6 +46595,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         if (resp.data.access_token) {
           localStorage.setItem('token', resp.data.access_token);
           localStorage.setItem('user', JSON.stringify(resp.data.user));
+          _this.$store.commit('setUser', resp.data.user);
           window.axios.defaults.headers.common['Authorization'] = 'Bearer ' + resp.data.access_token;
           if (_this.$route.params.nextUrl != null) {
             _this.$router.push(_this.$route.params.nextUrl);
@@ -46913,8 +46914,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     };
   },
   beforeMount: function beforeMount() {
-    localStorage.setItem('token', '');
     localStorage.setItem('user', '');
+    localStorage.setItem('token', '');
   },
 
   methods: {
@@ -46925,6 +46926,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         if (resp.data.access_token) {
           localStorage.setItem('token', resp.data.access_token);
           localStorage.setItem('user', JSON.stringify(resp.data.user));
+          _this.$store.commit('setUser', resp.data.user);
           window.axios.defaults.headers.common['Authorization'] = 'Bearer ' + resp.data.access_token;
           _this.$router.push('app');
         }
@@ -47238,8 +47240,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     'main-search': __WEBPACK_IMPORTED_MODULE_1__MainSearch_vue___default.a,
     'journey-sidebar': __WEBPACK_IMPORTED_MODULE_2__JourneySideBar_vue___default.a
   },
-  mounted: function mounted() {
-    var user = localStorage.getItem('user');
+  beforeMount: function beforeMount() {
+    var user = JSON.parse(localStorage.getItem('user'));
+    var token = localStorage.getItem('token');
+    // check user
+    if (!user || !token) this.$router.push('/');
+    window.axios.defaults.headers.common['Authorization'] = 'Bearer ' + token;
+    this.$store.commit('setUser', user);
   }
 });
 
@@ -48581,6 +48588,9 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
       return this.categories.filter(function (c) {
         return c.id != _this2.activeCategory.id;
       });
+    },
+    user: function user() {
+      return this.$store.state.user;
     }
   }
 });
@@ -48727,121 +48737,123 @@ var render = function() {
           )
         ]),
         _vm._v(" "),
-        _c(
-          "div",
-          { staticClass: "panel-footer" },
-          [
-            _c(
-              "button-spinner",
-              {
-                attrs: {
-                  title: "Delete journey",
-                  isLoading: _vm.isLoading,
-                  disabled: _vm.isLoading,
-                  status: _vm.status
-                },
-                nativeOn: {
-                  click: function($event) {
-                    return _vm.handleRemoveJourney($event)
-                  }
-                }
-              },
-              [_c("span", [_c("i", { staticClass: "fa fa-times" })])]
-            ),
-            _vm._v(" "),
-            !_vm.active
-              ? _c(
+        _vm.journey.user_id == _vm.user.id
+          ? _c(
+              "div",
+              { staticClass: "panel-footer" },
+              [
+                _c(
                   "button-spinner",
                   {
-                    class: "btn-success",
                     attrs: {
-                      title: "Start journey",
+                      title: "Delete journey",
                       isLoading: _vm.isLoading,
                       disabled: _vm.isLoading,
                       status: _vm.status
                     },
                     nativeOn: {
                       click: function($event) {
-                        return _vm.startJourney($event)
+                        return _vm.handleRemoveJourney($event)
                       }
                     }
                   },
-                  [_c("span", [_c("i", { staticClass: "fa fa-play" })])]
-                )
-              : _vm._e(),
-            _vm._v(" "),
-            _vm.active
-              ? _c(
-                  "button-spinner",
-                  {
-                    class: "btn-danger",
-                    attrs: {
-                      title: "Stop journey",
-                      isLoading: _vm.isLoading,
-                      disabled: _vm.isLoading,
-                      status: _vm.status
-                    },
-                    nativeOn: {
-                      click: function($event) {
-                        return _vm.stopJourney($event)
-                      }
-                    }
-                  },
-                  [_c("span", [_c("i", { staticClass: "fa fa-stop" })])]
-                )
-              : _vm._e(),
-            _vm._v(" "),
-            _c("div", { staticClass: "btn-group" }, [
-              _c(
-                "button",
-                {
-                  staticClass: "btn btn-primary dropdown-toggle",
-                  attrs: {
-                    type: "button",
-                    "data-toggle": "dropdown",
-                    "aria-haspopup": "true",
-                    "aria-expanded": "false"
-                  }
-                },
-                [
-                  _vm._v(
-                    "\n              " +
-                      _vm._s(
-                        _vm.activeCategory
-                          ? _vm.activeCategory.title
-                          : "Uncategorized"
-                      ) +
-                      " "
-                  ),
-                  _c("span", { staticClass: "caret" })
-                ]
-              ),
-              _vm._v(" "),
-              _c(
-                "ul",
-                { staticClass: "dropdown-menu" },
-                _vm._l(_vm.availableCategories, function(category) {
-                  return _c(
-                    "li",
-                    {
-                      on: {
-                        click: function($event) {
-                          _vm.updateCategory(category.id)
+                  [_c("span", [_c("i", { staticClass: "fa fa-times" })])]
+                ),
+                _vm._v(" "),
+                !_vm.active
+                  ? _c(
+                      "button-spinner",
+                      {
+                        class: "btn-success",
+                        attrs: {
+                          title: "Start journey",
+                          isLoading: _vm.isLoading,
+                          disabled: _vm.isLoading,
+                          status: _vm.status
+                        },
+                        nativeOn: {
+                          click: function($event) {
+                            return _vm.startJourney($event)
+                          }
                         }
+                      },
+                      [_c("span", [_c("i", { staticClass: "fa fa-play" })])]
+                    )
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm.active
+                  ? _c(
+                      "button-spinner",
+                      {
+                        class: "btn-danger",
+                        attrs: {
+                          title: "Stop journey",
+                          isLoading: _vm.isLoading,
+                          disabled: _vm.isLoading,
+                          status: _vm.status
+                        },
+                        nativeOn: {
+                          click: function($event) {
+                            return _vm.stopJourney($event)
+                          }
+                        }
+                      },
+                      [_c("span", [_c("i", { staticClass: "fa fa-stop" })])]
+                    )
+                  : _vm._e(),
+                _vm._v(" "),
+                _c("div", { staticClass: "btn-group" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-primary dropdown-toggle",
+                      attrs: {
+                        type: "button",
+                        "data-toggle": "dropdown",
+                        "aria-haspopup": "true",
+                        "aria-expanded": "false"
                       }
                     },
                     [
-                      _c("a", { attrs: { href: "#" } }, [
-                        _vm._v(_vm._s(category.title))
-                      ])
+                      _vm._v(
+                        "\n              " +
+                          _vm._s(
+                            _vm.activeCategory
+                              ? _vm.activeCategory.title
+                              : "Uncategorized"
+                          ) +
+                          " "
+                      ),
+                      _c("span", { staticClass: "caret" })
                     ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "ul",
+                    { staticClass: "dropdown-menu" },
+                    _vm._l(_vm.availableCategories, function(category) {
+                      return _c(
+                        "li",
+                        {
+                          on: {
+                            click: function($event) {
+                              _vm.updateCategory(category.id)
+                            }
+                          }
+                        },
+                        [
+                          _c("a", { attrs: { href: "#" } }, [
+                            _vm._v(_vm._s(category.title))
+                          ])
+                        ]
+                      )
+                    })
                   )
-                })
-              )
-            ])
-          ],
-          1
-        )
+                ])
+              ],
+              1
+            )
+          : _vm._e()
       ])
     ])
   ])
@@ -48919,7 +48931,7 @@ var render = function() {
         )
       }),
       _vm._v(" "),
-      !_vm.journeys.length
+      !_vm.journeys.length && !_vm.loading
         ? _c("div", { staticClass: "col-md-12" }, [
             _c("p", { staticClass: "alert alert-warning text-center" }, [
               _vm._v(
@@ -49307,7 +49319,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       isLoading: false,
       status: '',
       videoId: '',
-      journey: null,
       journeyObject: null
     };
   },
@@ -49322,10 +49333,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       this.isLoading = true;
       var journeyId = this.journey !== null && this.journey.hasOwnProperty('id') ? this.journey.id : null;
       Object(__WEBPACK_IMPORTED_MODULE_1__api__["h" /* storeJourneyObject */])(this.journeyObjectTypes[0].id, this.videoId, journeyId).then(function (resp) {
-        var journey = resp.data.journey;
-
-        _this.journey = journey;
-        _this.$store.commit('setJourney', _this.journey);
+        _this.$store.commit('setJourney', resp.data.journey);
         _this.journeyObject = _.find(_this.journey.journey_objects, function (jO) {
           return jO.object_id == _this.videoId;
         });
@@ -49345,12 +49353,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
       if (this.journeyObject == null) return false;
       Object(__WEBPACK_IMPORTED_MODULE_1__api__["g" /* removeJourneyObject */])(this.journeyObject.id).then(function (resp) {
-        _this2.journey = Object.assign({}, _this2.journey, {
+        var nextJourney = Object.assign({}, _this2.journey, {
           journey_objects: _this2.journey.journey_objects.filter(function (jO) {
             return jO.id != _this2.journeyObject.id;
           })
         });
-        _this2.$store.commit('setJourney', _this2.journey);
+        _this2.$store.commit('setJourney', nextJourney);
         _this2.journeyObject = null;
         _this2.isLoading = false;
         _this2.status = true;
@@ -49741,7 +49749,8 @@ __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_0_vuex
     journey: null,
     categories: [],
     journeyObjectTypes: [],
-    journeys: []
+    journeys: [],
+    user: null
   },
   mutations: {
     startJourney: function startJourney(state, journey) {
@@ -49757,7 +49766,10 @@ __WEBPACK_IMPORTED_MODULE_1_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_0_vuex
       state.journeyObjectTypes = journeyObjectTypes;
     },
     setJourney: function setJourney(state, journey) {
-      state.journey = journey;
+      state.journey = Object.assign({}, journey);
+    },
+    setUser: function setUser(state, user) {
+      state.user = Object.assign({}, user);
     }
   }
 }));

@@ -25,7 +25,7 @@
         @handleUpdateJourney="handleUpdateJourney($event)"
       ></journey-lane>
     </div><!-- /.col-md-12 journeys -->
-    <div class="col-md-12" v-if="!journeys.length">
+    <div class="col-md-12" v-if="!journeys.length && !loading">
       <p class="alert alert-warning text-center">
         No journeys taken yet. You are the first one
       </p>

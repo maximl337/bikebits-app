@@ -13,15 +13,15 @@
 	    		</ul>
     		</div>
     		<!-- /.panel-body -->
-    		<div class="panel-footer">
+    		<div class="panel-footer" v-if="journey.user_id == user.id">
     			<button-spinner
-              title="Delete journey"
-		          @click.native="handleRemoveJourney"
-		          :isLoading="isLoading" 
-		          :disabled="isLoading"
-		          :status="status">
-		            <span><i class="fa fa-times"></i></span>
-		        </button-spinner>
+            title="Delete journey"
+	          @click.native="handleRemoveJourney"
+	          :isLoading="isLoading" 
+	          :disabled="isLoading"
+	          :status="status">
+	            <span><i class="fa fa-times"></i></span>
+	        </button-spinner>
     			<button-spinner
             v-if="!active"
             title="Start journey"
@@ -121,6 +121,9 @@ export default {
     availableCategories() {
       if(!this.activeCategory) return this.categories
       return this.categories.filter(c => c.id != this.activeCategory.id)
+    },
+    user() {
+      return this.$store.state.user
     }
   }
 }

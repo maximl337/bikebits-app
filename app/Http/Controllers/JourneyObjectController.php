@@ -36,10 +36,9 @@ class JourneyObjectController extends ApiController
             'object_type_id' => 'required',
             'object_id' => 'required'
         ]);
-
         if(!$request->journey_id) {
             $journey = new Journey(
-                ['title' => 'unnamed journey']
+                ['title' => 'Unnamed journey']
             );
             $request->user()->journeys()->save($journey);
         } else {

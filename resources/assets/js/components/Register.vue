@@ -65,16 +65,17 @@ export default {
     }
   },
   beforeMount() {
-    localStorage.setItem('token', ''); 
     localStorage.setItem('user', '');
+    localStorage.setItem('token', '');
   },
   methods: {
     handleRegister() {
       register(this.first_name, this.last_name, this.email, this.password, this.password_confirmation)
         .then(resp => { 
           if(resp.data.access_token) {
-            localStorage.setItem('token', resp.data.access_token); 
-            localStorage.setItem('user', JSON.stringify(resp.data.user));
+            localStorage.setItem('token', resp.data.access_token)
+            localStorage.setItem('user', JSON.stringify(resp.data.user))
+            this.$store.commit('setUser', resp.data.user);
             window.axios.defaults.headers.common['Authorization'] = 'Bearer ' + resp.data.access_token;
             this.$router.push('app');
           }

@@ -8,7 +8,8 @@ export default new Vuex.Store({
     journey: null,
     categories: [],
     journeyObjectTypes: [],
-    journeys: []
+    journeys: [],
+    user: null
   },
   mutations: {
     startJourney(state, journey) {
@@ -24,7 +25,10 @@ export default new Vuex.Store({
       state.journeyObjectTypes = journeyObjectTypes
     },
     setJourney(state, journey) {
-      state.journey = journey
+      state.journey = Object.assign({}, journey)
+    },
+    setUser(state, user) {
+      state.user = Object.assign({}, user)
     }
   }
 })
