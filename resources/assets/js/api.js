@@ -69,7 +69,7 @@ export function updateJourney(journey) {
 
 export function youtubeSearch(q) {
   const YOUTUBE_URL = 'https://www.googleapis.com/youtube/v3/search';
-  const YOUTUBE_API_KEY = 'AIzaSyCapK2P3i5AERyaaRJ1JndnojwJ-QyMTeY';
+  const YOUTUBE_API_KEY = 'AIzaSyCZIoeSDtj-1EIBvZ81IWt-GgIAuf6ulLE';
   var url = new URL(YOUTUBE_URL);
   var params = {
     part: 'snippet',
@@ -77,10 +77,10 @@ export function youtubeSearch(q) {
     q: q,
     type: 'video',
     videoEmbeddable: true,
-    maxResults: 50
+    maxResults: 25
   };
   Object.keys(params).forEach(key => url.searchParams.append(key, params[key]))
-  return fetch(url)
+  return fetch(url);
 }
 
 export function storeJourneyObject(object_type_id, object_id, journey_id) {

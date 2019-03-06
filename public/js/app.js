@@ -576,7 +576,7 @@ function updateJourney(journey) {
 
 function youtubeSearch(q) {
   var YOUTUBE_URL = 'https://www.googleapis.com/youtube/v3/search';
-  var YOUTUBE_API_KEY = 'AIzaSyCapK2P3i5AERyaaRJ1JndnojwJ-QyMTeY';
+  var YOUTUBE_API_KEY = 'AIzaSyCZIoeSDtj-1EIBvZ81IWt-GgIAuf6ulLE';
   var url = new URL(YOUTUBE_URL);
   var params = {
     part: 'snippet',
@@ -584,7 +584,7 @@ function youtubeSearch(q) {
     q: q,
     type: 'video',
     videoEmbeddable: true,
-    maxResults: 50
+    maxResults: 25
   };
   Object.keys(params).forEach(function (key) {
     return url.searchParams.append(key, params[key]);
