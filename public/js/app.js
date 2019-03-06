@@ -576,7 +576,7 @@ function updateJourney(journey) {
 
 function youtubeSearch(q) {
   var YOUTUBE_URL = 'https://www.googleapis.com/youtube/v3/search';
-  var YOUTUBE_API_KEY = 'AIzaSyCZIoeSDtj-1EIBvZ81IWt-GgIAuf6ulLE';
+  var YOUTUBE_API_KEY = 'AIzaSyDrKGDDFSkszIgCvrCc9SNsZpxoGPpi_oM';
   var url = new URL(YOUTUBE_URL);
   var params = {
     part: 'snippet',
@@ -47637,7 +47637,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       this.$router.push({ name: 'search', query: { q: this.query } });
     }
   },
-  mounted: function mounted() {}
+  mounted: function mounted() {
+    if (this.$route.query.q) {
+      this.query = this.$route.query.q;
+    }
+  }
 });
 
 /***/ }),

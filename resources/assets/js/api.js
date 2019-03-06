@@ -69,7 +69,7 @@ export function updateJourney(journey) {
 
 export function youtubeSearch(q) {
   const YOUTUBE_URL = 'https://www.googleapis.com/youtube/v3/search';
-  const YOUTUBE_API_KEY = 'AIzaSyCZIoeSDtj-1EIBvZ81IWt-GgIAuf6ulLE';
+  const YOUTUBE_API_KEY = 'AIzaSyDrKGDDFSkszIgCvrCc9SNsZpxoGPpi_oM';
   var url = new URL(YOUTUBE_URL);
   var params = {
     part: 'snippet',

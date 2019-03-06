@@ -27,6 +27,9 @@ export default {
     }
   },
   mounted() {
+    if(this.$route.query.q) {
+      this.query = this.$route.query.q;
+    } 
   }
 }
 </script>
