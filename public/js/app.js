@@ -49400,6 +49400,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   created: function created() {
     var _this4 = this;
 
+    console.log(this.$store.state);
     this.videoId = this.$route.query.videoId;
     if (this.journey !== null) {
       this.journeyObject = _.find(this.journey.journey_objects, function (jO) {

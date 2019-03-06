@@ -108,6 +108,7 @@ export default {
     }
   },
   created() {
+    console.log(this.$store.state);
     this.videoId = this.$route.query.videoId
     if(this.journey !== null) {
       this.journeyObject = _.find(this.journey.journey_objects, jO => jO.object_id == this.videoId);

@@ -31,7 +31,9 @@ class JourneyController extends ApiController
                         })
                         ->with('journey_objects')
                         ->get();
-        return $this->respond(compact('journeys'));
+        return $this->respond([
+            'journeys' => $journeys
+        ]);
     }
 
     /**
